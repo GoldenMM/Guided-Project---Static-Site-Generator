@@ -21,7 +21,7 @@ class TestMarkdownToBlocks(unittest.TestCase):
 
     def test_empty_lines(self):
         text = "\n\nHello,\n\nWorld!\n\n"
-        expected = ["", "", "Hello,", "", "World!", ""]
+        expected = ["Hello,", "World!"]
         self.assertEqual(markdown_to_blocks(text), expected)
 
     def test_markdown_syntax(self):

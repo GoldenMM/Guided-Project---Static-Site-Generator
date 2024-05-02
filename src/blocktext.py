@@ -6,5 +6,7 @@ def markdown_to_blocks(text):
     lines = text.split("\n")
     blocks = []
     for line in lines:
+        if line == "":
+            continue
         blocks.append(line.strip())
     return blocks
