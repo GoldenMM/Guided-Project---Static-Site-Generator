@@ -43,17 +43,20 @@ def is_ordered_list(block):
     return True
 
 def block_to_block_type(block):
-    if block.startswith("#"):
+    # HEAD
+    if re.findall(r"^#{1,6} ", block):
         return BlockType.HEAD
+    # CODE
     if block.startswith("```") and block.endswith("```"):
         return BlockType.CODE
+    # QUOTE
     if block_lines_startwith(block, ">"):
         return BlockType.QUOTE
     # UNORDERED LIST
     for line in block.split("\n"):
         if line[0] == "*" or line[0] == "-":
             return BlockType.ULIST
-    # ORDERED LIST is now working??
+    # ORDERED LIST
     if is_ordered_list(block):
         return BlockType.OLIST
     return BlockType.PARA
