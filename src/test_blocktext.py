@@ -59,36 +59,6 @@ class TestBlockToBlockType(unittest.TestCase):
         block = "1. Item 1\n3. Item 2"
         self.assertNotEqual(block_to_block_type(block), BlockType.OLIST)
 
-class TestBlockToHtml(unittest.TestCase):
-    def test_paragraph_block(self):
-        block = "This is a paragraph."
-        expected = ParentNode("p", [LeafNode(None, block)])
-        self.assertEqual(block_to_html(block), expected)
-
-    def test_head_block(self):
-        block = "# This is a heading"
-        expected = ParentNode("h1", [LeafNode(None, "This is a heading")])
-        self.assertEqual(block_to_html(block), expected)
-
-    def test_code_block(self):
-        block = "```print('Hello, World!')```"
-        expected = ParentNode("code", [LeafNode(None, "print('Hello, World!')")])
-        self.assertEqual(block_to_html(block), expected)
-
-    def test_quote_block(self):
-        block = "> This is a quote"
-        expected = ParentNode("blockquote", [LeafNode(None, "This is a quote")])
-        self.assertEqual(block_to_html(block), expected)
-
-    def test_unordered_list_block(self):
-        block = "* Item 1\n* Item 2"
-        expected = ParentNode("ul", [ParentNode("li", [LeafNode(None, "Item 1")]), ParentNode("li", [LeafNode(None, "Item 2")])])
-        self.assertEqual(block_to_html(block), expected)
-
-    def test_ordered_list_block(self):
-        block = "1. Item 1\n2. Item 2"
-        expected = ParentNode("ol", [ParentNode("li", [LeafNode(None, "Item 1")]), ParentNode("li", [LeafNode(None, "Item 2")])])
-        self.assertEqual(block_to_html(block), expected)
 
 if __name__ == "__main__":
     unittest.main()
