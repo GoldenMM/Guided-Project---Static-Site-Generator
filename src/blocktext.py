@@ -97,7 +97,7 @@ def ulist_to_html(block):
         raise ValueError("Block is not an unordered list")
     children = []
     for line in block.split("\n"):
-        children.append(ParentNode(tag="li", children=line[2:]))
+        children.append(ParentNode(tag="li", children=text_to_children(line[2:])))
     return ParentNode(tag="ul", children=children)
 
 def olist_to_html(block):
@@ -105,7 +105,7 @@ def olist_to_html(block):
         raise ValueError("Block is not an ordered list")
     children = []
     for line in block.split("\n"):
-        children.append(ParentNode(tag="li", children=line[3:]))
+        children.append(ParentNode(tag="li", children=text_to_children(line[3:])))
     return ParentNode(tag="ol", children=children)
 
 def block_to_html_node(block):

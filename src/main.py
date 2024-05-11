@@ -25,10 +25,13 @@ def main():
     
     text_child = "This is a new para with bold text **bold text** and italic text *italic text*." 
     
+    list_test = "* This is a list\n* This is a **bold** list\n* This is a list"
     
-    print (markdown_to_html_node(block_test).to_html())
+    # print (markdown_to_html_node(block_test))
     
-
+    print (markdown_to_html_node(block_test).pretty_print())
+    
+    
 if __name__ == "__main__":
     
     main()

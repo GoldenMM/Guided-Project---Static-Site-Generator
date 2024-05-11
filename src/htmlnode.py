@@ -54,5 +54,14 @@ class ParentNode(HTMLNode):
                 children_html.extend(child.to_html())
         return f"<{self.tag}{self.props_to_html()}>{''.join(children_html)}</{self.tag}>"
 
+    def pretty_print(self, indent=0):
+        ret_string = self.__repr__() + "\n"
+        for child in self.children:
+            if child.children == None:
+                ret_string += "  " * indent + f"----{child.__repr__()}\n"
+            else:
+                ret_string += "  " * indent + f"----{child.pretty_print(indent + 1)}\n"
+        return ret_string
+    
     def __repr__(self) -> str:
-        return f"ParentNode({self.tag}, {self.children}, {self.props})"
+        return f"ParentNode({self.tag}, {self.props})"
