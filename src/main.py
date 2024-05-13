@@ -4,6 +4,7 @@ from inlinetext import *
 from blocktext import *
 import os
 import shutil
+from pathlib import Path
 
 def main():
     
@@ -20,11 +21,9 @@ def generate_pages_recursive(from_path, template_path, dest_path):
         if os.path.isdir(s):
             generate_pages_recursive(s, template_path, d)
         else:
-            if item.endswith(".md"):
-                generate_page(s, template_path, d)
-            else:
-                print(f"Copying {s} to {d}")
-                shutil.copy(s, d)
+            dest_path = d.replace(".md", ".html")
+            generate_page(s, template_path, dest_path)
+
     
 def generate_page(from_path, template_path, dest_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
@@ -37,10 +36,12 @@ def generate_page(from_path, template_path, dest_path):
     page = template.replace(r"{{ Title }}", title).replace(r"{{ Content }}", html)
     
     path_split = dest_path.split("/")
+    current_path = ""
     for dir in path_split[:-1]:
-        if not os.path.exists(dir):
-            print(f"Creating directory {dir}")
-            os.makedirs(dir)
+        current_path = os.path.join(current_path, dir)
+        if not os.path.exists(current_path):
+            print(f"Creating directory {current_path}")
+            os.makedirs(current_path)
     with open(dest_path, "w") as f:
         f.write(page)
 
