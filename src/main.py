@@ -21,6 +21,10 @@ def main():
     
     1. This is an ordered list
     2. This is an ordered list
+    
+    > This is a quote
+        
+    ```This is a code block```
     """
     
     text_child = "This is a new para with bold text **bold text** and italic text *italic text*." 
@@ -30,7 +34,7 @@ def main():
     # print (markdown_to_html_node(block_test))
     
 
-    print (markdown_to_html_node(block_test).to_html())
+    print (markdown_to_html_node(block_test).pretty_print())
     
     
 if __name__ == "__main__":

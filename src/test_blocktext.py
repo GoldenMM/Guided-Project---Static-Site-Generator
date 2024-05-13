@@ -60,7 +60,7 @@ class TestBlockToBlockType(unittest.TestCase):
 class TestHeadToHtml(unittest.TestCase):
     def test_valid_head_block(self):
         block = "# This is a heading"
-        expected = LeafNode(tag="h1", value="This is a heading")
+        expected = ParentNode(tag='h1', children=[LeafNode(tag=None, value="This is a heading")])
         self.assertEqual(head_to_html(block), expected)
 
     def test_invalid_head_block(self):
@@ -76,7 +76,7 @@ class TestHeadToHtml(unittest.TestCase):
 class TestParaToHtml(unittest.TestCase):
     def test_valid_para_block(self):
         block = "This is a paragraph."
-        expected = LeafNode(tag="p", value="This is a paragraph.")
+        expected = ParentNode(tag='p', children=[LeafNode(tag=None, value="This is a paragraph.")])
         self.assertEqual(para_to_html(block), expected)
 
     def test_invalid_para_block(self):
@@ -87,7 +87,7 @@ class TestParaToHtml(unittest.TestCase):
 class TestCodeToHtml(unittest.TestCase):
     def test_valid_code_block(self):
         block = "```print('Hello, World!')```"
-        expected = ParentNode(tag="pre", children=[LeafNode(tag="code", value="print('Hello, World!')")])
+        expected = ParentNode(tag="pre", children=[ParentNode(tag="code", children=[LeafNode(tag=None, value="print('Hello, World!')")])])
         self.assertEqual(code_to_html(block), expected)
 
     def test_invalid_code_block(self):
@@ -98,7 +98,7 @@ class TestCodeToHtml(unittest.TestCase):
 class TestQuoteToHtml(unittest.TestCase):
     def test_valid_quote_block(self):
         block = "> This is a quote"
-        expected = ParentNode(tag="blockquote", children=[LeafNode(tag="p", value="This is a quote")])
+        expected = ParentNode(tag="blockquote", children=[LeafNode(tag=None, value="This is a quote")])
         self.assertEqual(quote_to_html(block), expected)
 
     def test_invalid_quote_block(self):
@@ -108,13 +108,13 @@ class TestQuoteToHtml(unittest.TestCase):
 
     def test_multiple_lines_quote_block(self):
         block = "> This is a quote\n> with multiple lines\n> that are quoted"
-        expected = ParentNode(tag="blockquote", children=[LeafNode(tag="p", value="This is a quote with multiple lines that are quoted")])
+        expected = ParentNode(tag="blockquote", children=[LeafNode(tag=None, value="This is a quote with multiple lines that are quoted")])
         self.assertEqual(quote_to_html(block), expected)
         
 class TestUlistToHtml(unittest.TestCase):
     def test_valid_unordered_list_block(self):
         block = "* Item 1\n* Item 2"
-        expected = ParentNode(tag="ul", children=[LeafNode(tag="li", value="Item 1"), LeafNode(tag="li", value="Item 2")])
+        expected = ParentNode(tag="ul", children=[ParentNode(tag="li", children=[LeafNode(tag=None, value="Item 1")]), ParentNode(tag="li", children=[LeafNode(tag=None, value="Item 2")])])
         self.assertEqual(ulist_to_html(block), expected)
 
     def test_invalid_unordered_list_block(self):
@@ -125,7 +125,7 @@ class TestUlistToHtml(unittest.TestCase):
 class TestOlistToHtml(unittest.TestCase):
     def test_valid_ordered_list_block(self):
         block = "1. Item 1\n2. Item 2"
-        expected = ParentNode(tag="ol", children=[LeafNode(tag="li", value="Item 1"), LeafNode(tag="li", value="Item 2")])
+        expected = ParentNode(tag="ol", children=[ParentNode(tag="li", children=[LeafNode(tag=None, value="Item 1")]), ParentNode(tag="li", children=[LeafNode(tag=None, value="Item 2")])])
         self.assertEqual(olist_to_html(block), expected)
 
     def test_invalid_ordered_list_block(self):
