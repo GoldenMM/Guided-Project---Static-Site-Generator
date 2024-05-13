@@ -7,10 +7,11 @@ import shutil
 
 def main():
     
-    markdown_test = """# Hello, world!
-    This is a test of the markdown parser. This is a **bold** test. This is an *italic* test.
-    This is a `code` test. This is a [link](https://www.google.com). This is an ![image](https://www.google.com)
-    """
+    with open("content/index.md", "r") as f:
+        markdown = f.read()
+    # print(markdown_to_html_node(markdown).to_html())
+    
+    generate_page("content/index.md", "template.html", "public/index.html")
 
 
 def generate_page(from_path, template_path, dest_path):
