@@ -9,11 +9,23 @@ def main():
     
     with open("content/index.md", "r") as f:
         markdown = f.read()
-    # print(markdown_to_html_node(markdown).to_html())
+    # print(markdown_to_html_node(markdown).pretty_print())
     
-    generate_page("content/index.md", "template.html", "public/index.html")
+    generate_pages_recursive("content", "template.html", "public")
 
-
+def generate_pages_recursive(from_path, template_path, dest_path):
+    for item in os.listdir(from_path):
+        s = os.path.join(from_path, item)
+        d = os.path.join(dest_path, item)
+        if os.path.isdir(s):
+            generate_pages_recursive(s, template_path, d)
+        else:
+            if item.endswith(".md"):
+                generate_page(s, template_path, d)
+            else:
+                print(f"Copying {s} to {d}")
+                shutil.copy(s, d)
+    
 def generate_page(from_path, template_path, dest_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     with open(from_path, "r") as f:
